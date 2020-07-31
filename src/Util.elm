@@ -1,0 +1,11 @@
+module Util exposing (isLeapYear)
+
+{-| Util
+-}
+
+
+{-| isLeapYear
+-}
+isLeapYear : Int -> Bool
+isLeapYear year =
+    modBy 400 year == 0 || modBy 100 year /= 0 && modBy 4 year == 0
