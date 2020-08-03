@@ -1,6 +1,6 @@
 module Month exposing
     ( list
-    , before
+    , before, days, daysToMonth
     )
 
 {-| Month
@@ -13,11 +13,13 @@ module Month exposing
 
 # Query
 
-@docs before
+@docs before, days, daysToMonth
 
 -}
 
 import Time exposing (Month(..))
+import Util
+import Year exposing (Year)
 
 
 {-| list
@@ -54,3 +56,64 @@ before month =
     in
     list
         |> List.take index
+
+
+{-| days
+
+Returns the number of days in a month
+
+-}
+days : Year -> Month -> Int
+days year month =
+    case month of
+        Jan ->
+            31
+
+        Feb ->
+            if Util.isLeapYear year then
+                29
+
+            else
+                28
+
+        Mar ->
+            31
+
+        Apr ->
+            30
+
+        May ->
+            31
+
+        Jun ->
+            30
+
+        Jul ->
+            31
+
+        Aug ->
+            31
+
+        Sep ->
+            30
+
+        Oct ->
+            31
+
+        Nov ->
+            30
+
+        Dec ->
+            31
+
+
+{-| daysToMonth
+
+Returns number of days since January 1
+
+-}
+daysToMonth : Year -> Month -> Int
+daysToMonth year month =
+    before month
+        |> List.map (days year)
+        |> List.sum
