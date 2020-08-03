@@ -21,7 +21,6 @@ All computations use `Time.utc`
 
 -}
 
-import DateFormat
 import Day
 import Month
 import Time exposing (Month(..), Posix)
