@@ -1,6 +1,7 @@
 module TimeExtra exposing
     ( epoch, fromY, fromYM, fromYMD
     , fromYMDH, fromYMDHM, fromYMDHMS, fromYMDHMSM
+    , setYear, setMonth, setDay
     , isLeapYear
     )
 
@@ -15,6 +16,11 @@ All computations use `Time.utc`
 
 @docs epoch, fromY, fromYM, fromYMD
 @docs fromYMDH, fromYMDHM, fromYMDHMS, fromYMDHMSM
+
+
+# Transform
+
+@docs setYear, setMonth, setDay
 
 
 # Query
@@ -126,9 +132,68 @@ fromYMDHMSM year month day hour minute second millis =
 -- TRANSOFORM
 
 
-setMonth : Posix -> Month -> Posix
-setMonth time month =
-    Debug.todo "setMonth"
+setYear : Year -> Posix -> Posix
+setYear year time =
+    let
+        tyM =
+            Time.toYear Time.utc time
+                |> y_
+
+        tM =
+            p_ time
+
+        nyM =
+            y_ year
+    in
+    Time.millisToPosix <| tM - tyM + nyM
+
+
+setMonth : Month -> Posix -> Posix
+setMonth month time =
+    let
+        year =
+            Time.toYear Time.utc time
+
+        oldMonth =
+            Time.toMonth Time.utc time
+
+        tM =
+            p_ time
+
+        cmM =
+            m_ year oldMonth
+
+        nmM =
+            m_ year month
+    in
+    Time.millisToPosix <| tM - cmM + nmM
+
+
+setDay : Day -> Posix -> Posix
+setDay day time =
+    let
+        year =
+            Time.toYear Time.utc time
+
+        month =
+            Time.toMonth Time.utc time
+
+        oldDay =
+            Time.toDay Time.utc time
+
+        newDay =
+            clamp 1 (Month.days year month) day
+
+        tM =
+            p_ time
+
+        cdM =
+            d_ year month oldDay
+
+        ndM =
+            d_ year month newDay
+    in
+    Time.millisToPosix <| tM - cdM + ndM
 
 
 
@@ -144,6 +209,33 @@ isLeapYear =
 
 
 -- PRIVATE
+
+
+p_ : Posix -> Millis
+p_ time =
+    let
+        year =
+            Time.toYear Time.utc time
+
+        month =
+            Time.toMonth Time.utc time
+
+        day =
+            Time.toDay Time.utc time
+
+        hour =
+            Time.toHour Time.utc time
+
+        minute =
+            Time.toMinute Time.utc time
+
+        second =
+            Time.toSecond Time.utc time
+
+        millis =
+            Time.toMillis Time.utc time
+    in
+    ymdhmsm_ year month day hour minute second millis
 
 
 y_ : Year -> Millis
@@ -164,81 +256,76 @@ y_ year =
 
 ym_ : Year -> Month -> Millis
 ym_ year month =
-    let
-        yearM =
-            y_ year
+    y_ year + m_ year month
 
-        monthM =
-            Month.daysToMonth year month
-                |> (*) Day.millis
-    in
-    yearM + monthM
+
+m_ : Year -> Month -> Millis
+m_ year month =
+    Month.daysToMonth year month
+        |> (*) Day.millis
 
 
 ymd_ : Year -> Month -> Day -> Millis
 ymd_ year month day =
-    let
-        ymM =
-            ym_ year month
+    ym_ year month + d_ year month day
 
+
+d_ : Year -> Month -> Day -> Millis
+d_ year month day =
+    let
         clamped =
             clamp 1 (Month.days year month) day
     in
-    ymM + (clamped - 1) * Day.millis
+    (clamped - 1) * Day.millis
 
 
 ymdh_ : Year -> Month -> Day -> Hour -> Millis
 ymdh_ year month day hour =
-    let
-        ymdM =
-            ymd_ year month day
+    ymd_ year month day + h_ year month day hour
 
+
+h_ : Year -> Month -> Day -> Hour -> Millis
+h_ year month day hour =
+    let
         cHour =
             clamp 0 23 hour
-
-        hM =
-            cHour * Hour.millis
     in
-    ymdM + hM
+    cHour * Hour.millis
 
 
 ymdhm_ : Year -> Month -> Day -> Hour -> Minute -> Millis
 ymdhm_ year month day hour minute =
-    let
-        ymdhM =
-            ymdh_ year month day hour
+    ymdh_ year month day hour + min_ year month day hour minute
 
+
+min_ : Year -> Month -> Day -> Hour -> Minute -> Millis
+min_ year month day hour minute =
+    let
         cMinute =
             clamp 0 59 minute
-
-        mM =
-            cMinute * Minute.millis
     in
-    ymdhM + mM
+    cMinute * Minute.millis
 
 
 ymdhms_ : Year -> Month -> Day -> Hour -> Minute -> Second -> Millis
 ymdhms_ year month day hour minute second =
-    let
-        ymdhmM =
-            ymdhm_ year month day hour minute
+    ymdhm_ year month day hour minute + s_ year month day hour minute second
 
+
+s_ : Year -> Month -> Day -> Hour -> Minute -> Second -> Millis
+s_ year month day hour minute second =
+    let
         cSecond =
             clamp 0 59 second
-
-        sM =
-            cSecond * Second.millis
     in
-    ymdhmM + sM
+    cSecond * Second.millis
 
 
 ymdhmsm_ : Year -> Month -> Day -> Hour -> Minute -> Second -> Millis -> Millis
 ymdhmsm_ year month day hour minute second millis =
-    let
-        ymdhmsM =
-            ymdhms_ year month day hour minute second
+    ymdhms_ year month day hour minute second + ms_ year month day hour minute second millis
 
-        cMillis =
-            clamp 0 999 millis
-    in
-    ymdhmsM + cMillis
+
+ms_ : Year -> Month -> Day -> Hour -> Minute -> Second -> Millis -> Millis
+ms_ year month day hour minute second millis =
+    clamp 0 999 millis
