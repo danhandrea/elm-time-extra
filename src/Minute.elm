@@ -1,14 +1,14 @@
-module Day exposing
-    ( Day
+module Minute exposing
+    ( Minute
     , millis
     )
 
-{-| Day
+{-| Minute
 
 
 # Model
 
-@docs Day
+@docs Minute
 
 
 # Query
@@ -18,15 +18,12 @@ module Day exposing
 -}
 
 
-type alias Day =
+type alias Minute =
     Int
 
 
 {-| millis
-
-Number of millis in day
-
 -}
 millis : Int
 millis =
-    86400000
+    60000

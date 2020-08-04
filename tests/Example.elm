@@ -15,6 +15,10 @@ defaultFormat =
     DateFormat.format "dd/MM/yyyy" Time.utc
 
 
+timeFormat =
+    DateFormat.format "dd/MM/yyyy HH:mm:ss fff" Time.utc
+
+
 suite : Test
 suite =
     describe "Time Extra tests"
@@ -92,61 +96,89 @@ suite =
                             |> defaultFormat
                             |> Expect.equal "01/01/1970"
                 ]
-            , describe "fromYear"
+            , describe "fromY"
                 [ test "2020" <|
                     \_ ->
-                        TimeExtra.fromYear 2020
+                        TimeExtra.fromY 2020
                             |> defaultFormat
                             |> Expect.equal "01/01/2020"
                 , test "1965" <|
                     \_ ->
-                        TimeExtra.fromYear 1965
+                        TimeExtra.fromY 1965
                             |> defaultFormat
                             |> Expect.equal "01/01/1965"
                 , test "214" <|
                     \_ ->
-                        TimeExtra.fromYear 214
+                        TimeExtra.fromY 214
                             |> defaultFormat
                             |> Expect.equal "01/01/214"
                 ]
-            , describe "fromYearMonth"
+            , describe "fromYM"
                 [ test "2020 Apr" <|
                     \_ ->
-                        TimeExtra.fromYearMonth 2020 Apr
+                        TimeExtra.fromYM 2020 Apr
                             |> defaultFormat
                             |> Expect.equal "01/04/2020"
                 , test "1965 Apr" <|
                     \_ ->
-                        TimeExtra.fromYearMonth 1965 Apr
+                        TimeExtra.fromYM 1965 Apr
                             |> defaultFormat
                             |> Expect.equal "01/04/1965"
                 , test "1965 Dec" <|
                     \_ ->
-                        TimeExtra.fromYearMonth 1965 Dec
+                        TimeExtra.fromYM 1965 Dec
                             |> defaultFormat
                             |> Expect.equal "01/12/1965"
                 ]
-            , describe "fromYearMonthDay"
+            , describe "fromYMD"
                 [ test "2020 Apr 1" <|
                     \_ ->
-                        TimeExtra.fromYearMonthDay 2020 Apr 1
+                        TimeExtra.fromYMD 2020 Apr 1
                             |> defaultFormat
                             |> Expect.equal "01/04/2020"
                 , test "2020 Apr 30" <|
                     \_ ->
-                        TimeExtra.fromYearMonthDay 2020 Apr 30
+                        TimeExtra.fromYMD 2020 Apr 30
                             |> defaultFormat
                             |> Expect.equal "30/04/2020"
                 , test "2020 Apr 31 should resolve to 2020 Apr 30" <|
                     \_ ->
-                        TimeExtra.fromYearMonthDay 2020 Apr 30
+                        TimeExtra.fromYMD 2020 Apr 30
                             |> defaultFormat
                             |> Expect.equal "30/04/2020"
                 , test "1955 Dec 31" <|
                     \_ ->
-                        TimeExtra.fromYearMonthDay 1955 Dec 31
+                        TimeExtra.fromYMD 1955 Dec 31
                             |> defaultFormat
                             |> Expect.equal "31/12/1955"
+                ]
+            , describe "fromYMDH"
+                [ test "1955 Dec 31 5:00" <|
+                    \_ ->
+                        TimeExtra.fromYMDH 1955 Dec 31 5
+                            |> timeFormat
+                            |> Expect.equal "31/12/1955 05:00:00 0"
+                ]
+            , describe "fromYMDHM"
+                [ test "1955 Dec 31 7:39" <|
+                    \_ ->
+                        TimeExtra.fromYMDHM 1955 Dec 31 7 39
+                            |> timeFormat
+                            |> Expect.equal "31/12/1955 07:39:00 0"
+                ]
+            , describe "fromYMDHMS"
+                [ test "1955 Dec 31 7:39:59" <|
+                    \_ ->
+                        TimeExtra.fromYMDHMS 1955 Dec 31 7 39 59
+                            |> timeFormat
+                            |> Expect.equal "31/12/1955 07:39:59 0"
+                ]
+            , describe "fromYMDHMSM"
+                [ test "1955 Dec 31 7:39:59 597" <|
+                    \_ ->
+                        TimeExtra.fromYMDHMSM 1955 Dec 31 7 39 59 597
+                            |> timeFormat
+                            |> Expect.equal "31/12/1955 07:39:59 597"
                 ]
             ]
         ]
