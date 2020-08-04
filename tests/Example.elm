@@ -112,6 +112,16 @@ suite =
                         TimeExtra.fromY 214
                             |> defaultFormat
                             |> Expect.equal "01/01/214"
+                , test "2020 year is same as Time.getYear" <|
+                    \_ ->
+                        TimeExtra.fromY 2020
+                            |> Time.toYear Time.utc
+                            |> Expect.equal 2020
+                , test "1065  is same as Time.getYear" <|
+                    \_ ->
+                        TimeExtra.fromY 1065
+                            |> Time.toYear Time.utc
+                            |> Expect.equal 1065
                 ]
             , describe "fromYM"
                 [ test "2020 Apr" <|
@@ -129,6 +139,16 @@ suite =
                         TimeExtra.fromYM 1965 Dec
                             |> defaultFormat
                             |> Expect.equal "01/12/1965"
+                , test "Month same as Time.toMonth Dec" <|
+                    \_ ->
+                        TimeExtra.fromYM 1965 Dec
+                            |> Time.toMonth Time.utc
+                            |> Expect.equal Dec
+                , test "Month same as Time.toMonth Jan" <|
+                    \_ ->
+                        TimeExtra.fromYM 2020 Jan
+                            |> Time.toMonth Time.utc
+                            |> Expect.equal Jan
                 ]
             , describe "fromYMD"
                 [ test "2020 Apr 1" <|
@@ -151,6 +171,11 @@ suite =
                         TimeExtra.fromYMD 1955 Dec 31
                             |> defaultFormat
                             |> Expect.equal "31/12/1955"
+                , test "Day same as Time.toDay 1955 Dec 31" <|
+                    \_ ->
+                        TimeExtra.fromYMD 1955 Dec 31
+                            |> Time.toDay Time.utc
+                            |> Expect.equal 31
                 ]
             , describe "fromYMDH"
                 [ test "1955 Dec 31 5:00" <|
@@ -158,6 +183,11 @@ suite =
                         TimeExtra.fromYMDH 1955 Dec 31 5
                             |> timeFormat
                             |> Expect.equal "31/12/1955 05:00:00 0"
+                , test "Hour same as Time.toHour 1955 Dec 31 5:00" <|
+                    \_ ->
+                        TimeExtra.fromYMDH 1955 Dec 31 5
+                            |> Time.toHour Time.utc
+                            |> Expect.equal 5
                 ]
             , describe "fromYMDHM"
                 [ test "1955 Dec 31 7:39" <|
@@ -165,6 +195,11 @@ suite =
                         TimeExtra.fromYMDHM 1955 Dec 31 7 39
                             |> timeFormat
                             |> Expect.equal "31/12/1955 07:39:00 0"
+                , test "Minute same as Time.toMinute 1955 Dec 31 7:39" <|
+                    \_ ->
+                        TimeExtra.fromYMDHM 1955 Dec 31 7 39
+                            |> Time.toMinute Time.utc
+                            |> Expect.equal 39
                 ]
             , describe "fromYMDHMS"
                 [ test "1955 Dec 31 7:39:59" <|
@@ -172,6 +207,11 @@ suite =
                         TimeExtra.fromYMDHMS 1955 Dec 31 7 39 59
                             |> timeFormat
                             |> Expect.equal "31/12/1955 07:39:59 0"
+                , test "Second same as Time.toSecond 1955 Dec 31 7:39:59" <|
+                    \_ ->
+                        TimeExtra.fromYMDHMS 1955 Dec 31 7 39 59
+                            |> Time.toSecond Time.utc
+                            |> Expect.equal 59
                 ]
             , describe "fromYMDHMSM"
                 [ test "1955 Dec 31 7:39:59 597" <|
@@ -179,6 +219,11 @@ suite =
                         TimeExtra.fromYMDHMSM 1955 Dec 31 7 39 59 597
                             |> timeFormat
                             |> Expect.equal "31/12/1955 07:39:59 597"
+                , test "Millis same as Time.toMillis 1955 Dec 31 7:39:59 597" <|
+                    \_ ->
+                        TimeExtra.fromYMDHMSM 1955 Dec 31 7 39 59 597
+                            |> Time.toMillis Time.utc
+                            |> Expect.equal 597
                 ]
             ]
         ]
