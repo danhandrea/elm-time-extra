@@ -2,7 +2,6 @@ module TimeExtra exposing
     ( epoch, fromY, fromYM, fromYMD
     , fromYMDH, fromYMDHM, fromYMDHMS, fromYMDHMSM
     , isLeapYear
-    , setDay, setMonth, setYear
     )
 
 {-| TimeExtra

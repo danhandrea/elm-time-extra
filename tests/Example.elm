@@ -225,71 +225,72 @@ suite =
                             |> Time.toMillis Time.utc
                             |> Expect.equal 597
                 ]
-            , describe "setYear"
-                [ test "2020 -> 2019" <|
-                    \_ ->
-                        TimeExtra.fromY 2020
-                            |> TimeExtra.setYear 2019
-                            |> Time.toYear Time.utc
-                            |> Expect.equal 2019
-                , test "2019 -> 2020" <|
-                    \_ ->
-                        TimeExtra.fromY 2019
-                            |> TimeExtra.setYear 2020
-                            |> Time.toYear Time.utc
-                            |> Expect.equal 2020
-                , test "2019 -> 1965" <|
-                    \_ ->
-                        TimeExtra.fromY 2019
-                            |> TimeExtra.setYear 1965
-                            |> Time.toYear Time.utc
-                            |> Expect.equal 1965
-                , test "1965 -> 2019" <|
-                    \_ ->
-                        TimeExtra.fromY 1965
-                            |> TimeExtra.setYear 2019
-                            |> Time.toYear Time.utc
-                            |> Expect.equal 2019
-                , test "1965 Apr 4 -> 2019" <|
-                    \_ ->
-                        TimeExtra.fromYMD 1965 Apr 4
-                            |> TimeExtra.setYear 2019
-                            |> Time.toYear Time.utc
-                            |> Expect.equal 2019
-                , test "2020 Feb 29 -> 2019" <|
-                    \_ ->
-                        TimeExtra.fromYMD 2020 Feb 29
-                            |> TimeExtra.setYear 2019
-                            |> Time.toYear Time.utc
-                            |> Expect.equal 2019
-                ]
-            , describe "setMonth"
-                [ test "2020 Mar -> 2020 Apr" <|
-                    \_ ->
-                        TimeExtra.fromYM 2020 Mar
-                            |> TimeExtra.setMonth Apr
-                            |> Time.toMonth Time.utc
-                            |> Expect.equal Apr
-                , test "1955 Mar -> 1955 Dec" <|
-                    \_ ->
-                        TimeExtra.fromYM 1955 Mar
-                            |> TimeExtra.setMonth Dec
-                            |> Time.toMonth Time.utc
-                            |> Expect.equal Dec
-                , test "1955 Aug 31  -> 1955 Sep" <|
-                    \_ ->
-                        TimeExtra.fromYMD 1955 Aug 31
-                            |> TimeExtra.setMonth Sep
-                            |> Time.toMonth Time.utc
-                            |> Expect.equal Oct
-                ]
-            , describe "setDay"
-                [ test "2020 Jan 4 -> 2020 Jan 7" <|
-                    \_ ->
-                        TimeExtra.fromYMD 2020 Jan 4
-                            |> TimeExtra.setDay 7
-                            |> Time.toDay Time.utc
-                            |> Expect.equal 7
-                ]
+
+            -- , describe "setYear"
+            --     [ test "2020 -> 2019" <|
+            --         \_ ->
+            --             TimeExtra.fromY 2020
+            --                 |> TimeExtra.setYear 2019
+            --                 |> Time.toYear Time.utc
+            --                 |> Expect.equal 2019
+            --     , test "2019 -> 2020" <|
+            --         \_ ->
+            --             TimeExtra.fromY 2019
+            --                 |> TimeExtra.setYear 2020
+            --                 |> Time.toYear Time.utc
+            --                 |> Expect.equal 2020
+            --     , test "2019 -> 1965" <|
+            --         \_ ->
+            --             TimeExtra.fromY 2019
+            --                 |> TimeExtra.setYear 1965
+            --                 |> Time.toYear Time.utc
+            --                 |> Expect.equal 1965
+            --     , test "1965 -> 2019" <|
+            --         \_ ->
+            --             TimeExtra.fromY 1965
+            --                 |> TimeExtra.setYear 2019
+            --                 |> Time.toYear Time.utc
+            --                 |> Expect.equal 2019
+            --     , test "1965 Apr 4 -> 2019" <|
+            --         \_ ->
+            --             TimeExtra.fromYMD 1965 Apr 4
+            --                 |> TimeExtra.setYear 2019
+            --                 |> Time.toYear Time.utc
+            --                 |> Expect.equal 2019
+            --     , test "2020 Feb 29 -> 2019" <|
+            --         \_ ->
+            --             TimeExtra.fromYMD 2020 Feb 29
+            --                 |> TimeExtra.setYear 2019
+            --                 |> Time.toYear Time.utc
+            --                 |> Expect.equal 2019
+            --     ]
+            -- , describe "setMonth"
+            --     [ test "2020 Mar -> 2020 Apr" <|
+            --         \_ ->
+            --             TimeExtra.fromYM 2020 Mar
+            --                 |> TimeExtra.setMonth Apr
+            --                 |> Time.toMonth Time.utc
+            --                 |> Expect.equal Apr
+            --     , test "1955 Mar -> 1955 Dec" <|
+            --         \_ ->
+            --             TimeExtra.fromYM 1955 Mar
+            --                 |> TimeExtra.setMonth Dec
+            --                 |> Time.toMonth Time.utc
+            --                 |> Expect.equal Dec
+            --     , test "1955 Aug 31  -> 1955 Sep" <|
+            --         \_ ->
+            --             TimeExtra.fromYMD 1955 Aug 31
+            --                 |> TimeExtra.setMonth Sep
+            --                 |> Time.toMonth Time.utc
+            --                 |> Expect.equal Oct
+            --     ]
+            -- , describe "setDay"
+            --     [ test "2020 Jan 4 -> 2020 Jan 7" <|
+            --         \_ ->
+            --             TimeExtra.fromYMD 2020 Jan 4
+            --                 |> TimeExtra.setDay 7
+            --                 |> Time.toDay Time.utc
+            --                 |> Expect.equal 7
+            --     ]
             ]
         ]
