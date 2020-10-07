@@ -1,7 +1,7 @@
 module TimeExtra exposing
     ( epoch, fromY, fromYM, fromYMD
     , fromYMDH, fromYMDHM, fromYMDHMS, fromYMDHMSM
-    , isLeapYear
+    , isLeapYear, daysInMonth
     )
 
 {-| TimeExtra
@@ -19,7 +19,7 @@ All computations use `Time.utc`
 
 # Query
 
-@docs isLeapYear
+@docs isLeapYear, daysInMonth
 
 -}
 
@@ -199,6 +199,16 @@ setDay day time =
 isLeapYear : Int -> Bool
 isLeapYear =
     Util.isLeapYear
+
+
+{-| daysInMonth
+
+    returns the number of days in a month
+
+-}
+daysInMonth : Year -> Month -> Int
+daysInMonth =
+    Month.days
 
 
 

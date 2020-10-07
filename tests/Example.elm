@@ -6,15 +6,17 @@ import Expect exposing (Expectation)
 import Fuzz exposing (Fuzzer, int, list, string)
 import Month
 import Test exposing (..)
-import Time exposing (Month(..))
+import Time exposing (Month(..), Posix)
 import TimeExtra
 import Util
 
 
+defaultFormat : Posix -> String
 defaultFormat =
     DateFormat.format "dd/MM/yyyy" Time.utc
 
 
+timeFormat : Posix -> String
 timeFormat =
     DateFormat.format "dd/MM/yyyy HH:mm:ss fff" Time.utc
 
