@@ -1,8 +1,8 @@
 module TimeExtra exposing
     ( epoch, fromY, fromYM, fromYMD
     , fromYMDH, fromYMDHM, fromYMDHMS, fromYMDHMSM
-    , setYear, setMonth, setDay
     , isLeapYear
+    , setDay, setMonth, setYear
     )
 
 {-| TimeExtra
@@ -16,11 +16,6 @@ All computations use `Time.utc`
 
 @docs epoch, fromY, fromYM, fromYMD
 @docs fromYMDH, fromYMDHM, fromYMDHMS, fromYMDHMSM
-
-
-# Transform
-
-@docs setYear, setMonth, setDay
 
 
 # Query
